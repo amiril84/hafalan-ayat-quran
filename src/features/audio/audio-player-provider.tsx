@@ -31,6 +31,24 @@ type AudioPlayerContextValue = {
 
 const AudioPlayerContext = createContext<AudioPlayerContextValue | null>(null);
 
+function toPlayableAudioUrl(audioUrl: string) {
+  if (audioUrl.startsWith("/")) {
+    return audioUrl;
+  }
+
+  try {
+    const url = new URL(audioUrl);
+
+    if (url.origin === window.location.origin) {
+      return `${url.pathname}${url.search}`;
+    }
+
+    return `/api/audio?src=${encodeURIComponent(url.toString())}`;
+  } catch {
+    return audioUrl;
+  }
+}
+
 export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
@@ -52,7 +70,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
 
     setStatus("loading");
     setErrorMessage(null);
-    audio.src = audioUrl;
+    audio.src = toPlayableAudioUrl(audioUrl);
     audio.load();
 
     void audio

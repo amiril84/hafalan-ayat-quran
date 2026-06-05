@@ -6,26 +6,33 @@ describe("AudioButton", () => {
   const playMock = vi.fn<() => Promise<void>>();
   const pauseMock = vi.fn();
   const loadMock = vi.fn();
+  const audioInstances: MockAudio[] = [];
+
+  class MockAudio {
+    preload = "";
+    src = "";
+    play = playMock;
+    pause = pauseMock;
+    load = loadMock;
+    addEventListener = vi.fn();
+    removeEventListener = vi.fn();
+    removeAttribute = vi.fn((attribute: string) => {
+      if (attribute === "src") {
+        this.src = "";
+      }
+    });
+
+    constructor() {
+      audioInstances.push(this);
+    }
+  }
 
   beforeEach(() => {
+    audioInstances.length = 0;
+    playMock.mockReset();
     playMock.mockResolvedValue(undefined);
-    pauseMock.mockClear();
-    loadMock.mockClear();
-
-    class MockAudio {
-      preload = "";
-      src = "";
-      play = playMock;
-      pause = pauseMock;
-      load = loadMock;
-      addEventListener = vi.fn();
-      removeEventListener = vi.fn();
-      removeAttribute = vi.fn((attribute: string) => {
-        if (attribute === "src") {
-          this.src = "";
-        }
-      });
-    }
+    pauseMock.mockReset();
+    loadMock.mockReset();
 
     vi.stubGlobal("Audio", MockAudio);
   });
@@ -84,5 +91,30 @@ describe("AudioButton", () => {
 
     expect(screen.getByText("Audio gagal")).toBeInTheDocument();
     expect(screen.getByText("Audio ayat belum tersedia.")).toBeInTheDocument();
+  });
+
+  it("routes external audio through the same-origin audio proxy", async () => {
+    renderWithProviders(
+      <AudioButton
+        trackId="range-2-168-173"
+        label="Al Baqarah ayat 168 sampai 173"
+        audioUrls={[
+          "https://cdn.equran.id/audio-partial/Abdurrahman-as-Sudais/002168.mp3",
+        ]}
+      />,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Dengarkan Al Baqarah ayat 168 sampai 173",
+      }),
+    );
+
+    await waitFor(() => {
+      expect(playMock).toHaveBeenCalledTimes(1);
+    });
+    expect(audioInstances[0].src).toBe(
+      "/api/audio?src=https%3A%2F%2Fcdn.equran.id%2Faudio-partial%2FAbdurrahman-as-Sudais%2F002168.mp3",
+    );
   });
 });
