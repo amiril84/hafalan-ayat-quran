@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Surah {
+  id             Int              @id
+  nameLatin      String
+  nameNormalized String           @unique
+  nameArabic     String?
+  ayahCount      Int
+  thematicVerses ThematicVerse[]
+  ayahs          Ayah[]
+
+  @@map("surahs")
+}
+
+model ThematicVerse {
+  id                       String  @id
+  order                    Int
+  surahId                  Int
+  surahName                String
+  surahNameNormalized      String
+  startAyah                Int
+  endAyah                  Int
+  theme                    String
+  firstAyahSnippetArabic   String
+  surah                    Surah   @relation(fields: [surahId], references: [id])
+
+  @@index([surahId, startAyah])
+  @@map("thematic_verses")
+}
+
+model Ayah {
+  id                   String  @id
+  surahId              Int
+  surahName            String
+  ayahNumber           Int
+  arabicText           String
+  translationId        String
+  translationSource    String  @default("Fixture Dummy")
+  translationSourceUrl String  @default("")
+  providerMetadata     Json?
+  audio                Audio?
+  tafsir               Tafsir?
+  surah                Surah   @relation(fields: [surahId], references: [id])
+
+  @@unique([surahId, ayahNumber])
+  @@index([surahId, ayahNumber])
+  @@map("ayahs")
+}
+
+model Tafsir {
+  id               String @id
+  ayahId           String @unique
+  surahId          Int
+  surahName        String
+  ayahNumber       Int
+  tafsirText       String
+  tafsirSource     String
+  tafsirSourceUrl  String @default("")
+  language         String
+  providerMetadata Json?
+  ayah             Ayah   @relation(fields: [ayahId], references: [id])
+
+  @@index([surahId, ayahNumber])
+  @@map("tafsirs")
+}
+
+model Audio {
+  id               String @id
+  ayahId           String @unique
+  surahId          Int
+  ayahNumber       Int
+  audioUrl         String
+  audioReciter     String
+  audioSource      String @default("Fixture Dummy")
+  audioSourceUrl   String @default("")
+  providerMetadata Json?
+  ayah             Ayah   @relation(fields: [ayahId], references: [id])
+
+  @@index([surahId, ayahNumber])
+  @@map("audios")
+}

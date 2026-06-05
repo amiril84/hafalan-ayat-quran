@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 165 24% 97%;
+  --foreground: 170 26% 12%;
+  --muted: 190 18% 92%;
+  --muted-foreground: 177 12% 34%;
+  --border: 190 18% 84%;
+  --primary: 166 72% 24%;
+  --primary-foreground: 0 0% 100%;
+  --font-sans: Inter, "Segoe UI", Arial;
+  --font-arabic: "Noto Naskh Arabic", Amiri, "Times New Roman";
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    linear-gradient(180deg, hsl(165 38% 98%), hsl(var(--background)) 22rem),
+    radial-gradient(circle at top left, rgb(205 232 223 / 0.72), transparent 28rem),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 3px solid hsl(var(--primary) / 0.5);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.18);
+}
