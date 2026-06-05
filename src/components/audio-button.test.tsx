@@ -6,39 +6,20 @@ describe("AudioButton", () => {
   const playMock = vi.fn<() => Promise<void>>();
   const pauseMock = vi.fn();
   const loadMock = vi.fn();
-  const audioInstances: MockAudio[] = [];
-
-  class MockAudio {
-    preload = "";
-    src = "";
-    play = playMock;
-    pause = pauseMock;
-    load = loadMock;
-    addEventListener = vi.fn();
-    removeEventListener = vi.fn();
-    removeAttribute = vi.fn((attribute: string) => {
-      if (attribute === "src") {
-        this.src = "";
-      }
-    });
-
-    constructor() {
-      audioInstances.push(this);
-    }
-  }
 
   beforeEach(() => {
-    audioInstances.length = 0;
     playMock.mockReset();
     playMock.mockResolvedValue(undefined);
     pauseMock.mockReset();
     loadMock.mockReset();
 
-    vi.stubGlobal("Audio", MockAudio);
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(playMock);
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(pauseMock);
+    vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(loadMock);
   });
 
   afterEach(() => {
-    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
   it("moves from idle to loading, playing, and stop", async () => {
@@ -113,7 +94,10 @@ describe("AudioButton", () => {
     await waitFor(() => {
       expect(playMock).toHaveBeenCalledTimes(1);
     });
-    expect(audioInstances[0].src).toBe(
+    const audio = document.querySelector("audio");
+    const playableUrl = new URL(audio?.getAttribute("src") ?? "", location.href);
+
+    expect(`${playableUrl.pathname}${playableUrl.search}`).toBe(
       "/api/audio?src=https%3A%2F%2Fcdn.equran.id%2Faudio-partial%2FAbdurrahman-as-Sudais%2F002168.mp3",
     );
   });

@@ -54,12 +54,12 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const [activeLabel, setActiveLabel] = useState<string | null>(null);
   const [status, setStatus] = useState<AudioStatus>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlsRef = useRef<string[]>([]);
   const audioIndexRef = useRef(0);
 
   const playCurrentAudio = useCallback(() => {
-    const audio = audioRef.current;
+    const audio = audioElementRef.current;
     const audioUrl = audioUrlsRef.current[audioIndexRef.current];
 
     if (!audio || !audioUrl) {
@@ -87,7 +87,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const stop = useCallback(() => {
-    const audio = audioRef.current;
+    const audio = audioElementRef.current;
 
     if (audio) {
       audio.pause();
@@ -113,7 +113,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      const audio = audioRef.current;
+      const audio = audioElementRef.current;
 
       if (audio) {
         audio.pause();
@@ -140,10 +140,11 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   );
 
   useEffect(() => {
-    const audio = new Audio();
+    const audio = audioElementRef.current;
 
-    audio.preload = "auto";
-    audioRef.current = audio;
+    if (!audio) {
+      return;
+    }
 
     const handleEnded = () => {
       const nextIndex = audioIndexRef.current + 1;
@@ -171,7 +172,6 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("error", handleError);
       audio.pause();
-      audioRef.current = null;
     };
   }, [playCurrentAudio, stop]);
 
@@ -198,6 +198,14 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
 
   return (
     <AudioPlayerContext.Provider value={value}>
+      <audio
+        ref={audioElementRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute h-px w-px opacity-0"
+        playsInline
+        preload="none"
+        tabIndex={-1}
+      />
       {children}
     </AudioPlayerContext.Provider>
   );
