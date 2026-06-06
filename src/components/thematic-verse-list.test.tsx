@@ -17,9 +17,14 @@ function createJsonResponse(data: unknown, init?: ResponseInit) {
 describe("ThematicVerseList", () => {
   afterEach(() => {
     vi.unstubAllGlobals();
+    vi.restoreAllMocks();
   });
 
-  it("renders backend data and keeps public Sudais audio ready on cards", async () => {
+  it("renders backend data and keeps R2 range audio ready on cards", async () => {
+    const playMock = vi.fn<() => Promise<void>>().mockResolvedValue(undefined);
+    vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(playMock);
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(vi.fn());
+    vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(vi.fn());
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = String(input);
 
@@ -47,6 +52,17 @@ describe("ThematicVerseList", () => {
         name: "Dengarkan Al Baqarah ayat 183 sampai 188",
       }),
     ).toBeEnabled();
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: "Dengarkan Al Baqarah ayat 183 sampai 188",
+      }),
+    );
+    await waitFor(() => {
+      expect(playMock).toHaveBeenCalledTimes(1);
+    });
+    expect(document.querySelector("audio")?.getAttribute("src")).toBe(
+      "https://audio.mushollamj.com/ranges/baqarah-183-188.mp3",
+    );
     expect(fetchMock).not.toHaveBeenCalledWith(
       expect.stringContaining("/api/ayah-details?"),
     );

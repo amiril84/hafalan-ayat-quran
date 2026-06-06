@@ -4,15 +4,21 @@ import type {
   TafsirDetail,
   ThematicVerse,
 } from "@/features/quran/quran.types";
+import { getRangeAudioUrl } from "@/features/quran/audio-urls";
 import type { QuranRepository } from "./quran-repository";
 
 export class PrismaQuranRepository implements QuranRepository {
   constructor(private readonly db: PrismaClient) {}
 
   async listThematicVerses(): Promise<ThematicVerse[]> {
-    return this.db.thematicVerse.findMany({
+    const verses = await this.db.thematicVerse.findMany({
       orderBy: [{ surahId: "asc" }, { startAyah: "asc" }],
     });
+
+    return verses.map((verse) => ({
+      ...verse,
+      rangeAudioUrl: getRangeAudioUrl(verse),
+    }));
   }
 
   async getAyahDetails({

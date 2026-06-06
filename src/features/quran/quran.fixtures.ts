@@ -1,4 +1,5 @@
 import { sortThematicVerses } from "@/lib/sort-thematic-verses";
+import { getRangeAudioUrl, getSudaisAudioUrl } from "./audio-urls";
 import type { AyahDetail, TafsirDetail, ThematicVerse } from "./quran.types";
 
 const audioReciter = "Abdurrahman as-Sudais" as const;
@@ -54,7 +55,7 @@ function repairArabicText(value: string) {
   return new TextDecoder().decode(bytes);
 }
 
-const rawThematicVerseFixtures: ThematicVerse[] = [
+const rawThematicVerseFixtures: Array<Omit<ThematicVerse, "rangeAudioUrl">> = [
   {
     id: "8-1-4",
     order: 1,
@@ -329,13 +330,8 @@ export const thematicVerseFixtures: ThematicVerse[] = sortThematicVerses(
 ).map((verse) => ({
   ...verse,
   firstAyahSnippetArabic: repairArabicText(verse.firstAyahSnippetArabic),
+  rangeAudioUrl: getRangeAudioUrl(verse),
 }));
-
-function createAudioUrl(surahId: number, ayahNumber: number) {
-  return `https://cdn.equran.id/audio-partial/Abdurrahman-as-Sudais/${String(
-    surahId,
-  ).padStart(3, "0")}${String(ayahNumber).padStart(3, "0")}.mp3`;
-}
 
 const rawAyahDetailFixtures: AyahDetail[] = thematicVerseFixtures.flatMap(
   (verse) =>
@@ -353,7 +349,7 @@ const rawAyahDetailFixtures: AyahDetail[] = thematicVerseFixtures.flatMap(
               ? verse.firstAyahSnippetArabic
               : `آيَةٌ تَدْرِيبِيَّةٌ لِسُورَةِ ${verse.surahName} رَقْمُ ${ayahNumber}`,
           translationId: `Terjemahan dummy ${verse.surahName} ayat ${ayahNumber} untuk fondasi tampilan hafalan.`,
-          audioUrl: createAudioUrl(verse.surahId, ayahNumber),
+          audioUrl: getSudaisAudioUrl(verse.surahId, ayahNumber),
           audioReciter,
         };
       },

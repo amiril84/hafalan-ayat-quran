@@ -725,6 +725,65 @@ AI gate:
 - Jika lulus, AI melaporkan aplikasi siap deploy.
 - AI menunggu konfirmasi user untuk deploy atau perubahan tambahan.
 
+## Phase 9 - Audio Gabungan R2
+
+Tujuan fase:
+
+- Mengurangi jeda pada fitur `Dengarkan semua` dengan memakai satu file MP3 gabungan per range ayat tematik.
+- Memindahkan streaming audio range ke Cloudflare R2 custom domain agar tidak memakai bandwidth Vercel.
+
+Scope implementasi:
+
+- Gunakan bucket R2 `tahfidzh-mj-audio`.
+- Gunakan public base URL `https://audio.mushollamj.com`.
+- Credential upload dibaca dari `.env`.
+- Tidak memakai `r2.dev` untuk production.
+- Tambahkan script lokal untuk:
+  - membaca 24 range dari data tematik.
+  - mengunduh MP3 Sudais per ayat dari EQuran ke cache lokal.
+  - menggabungkan tiap range memakai `ffmpeg`.
+  - menghasilkan object key stabil seperti `ranges/baqarah-284-286.mp3`.
+  - upload hasil gabungan ke R2 via S3-compatible API secara idempotent.
+- Tambahkan metadata `rangeAudioUrl` untuk setiap `ThematicVerse`.
+- Ubah tombol `Dengarkan semua` pada card daftar dan header detail agar memakai satu URL gabungan R2.
+- Pertahankan tombol `Dengarkan ayat` per ayat memakai audio individual.
+- Ubah audio player agar URL `audio.mushollamj.com` diputar langsung, bukan lewat `/api/audio`.
+- Tambahkan output/cache audio lokal ke `.gitignore`.
+
+Acceptance criteria:
+
+- Semua 24 ayat tematik memiliki `rangeAudioUrl`.
+- Semua `rangeAudioUrl` memakai domain `https://audio.mushollamj.com`.
+- Tombol `Dengarkan semua` memakai satu URL audio gabungan, bukan queue URL per ayat.
+- Tombol `Dengarkan ayat` tetap memutar audio per ayat.
+- URL R2 tidak diproxy lewat `/api/audio`.
+- File gabungan berhasil diupload ke R2 dan bisa dibuka langsung dari browser.
+- Tidak ada regression pada halaman daftar, detail, tafsir, audio per ayat, dan build production.
+
+Test otomatis wajib:
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test -- --run
+pnpm test:e2e
+pnpm build
+```
+
+Test detail untuk AI:
+
+- Unit test helper URL audio gabungan dan object key R2.
+- Unit test memastikan 24 fixture tematik memiliki `rangeAudioUrl`.
+- Component test memastikan `Dengarkan semua` menerima satu URL gabungan R2.
+- Unit test audio player memastikan domain R2 diputar langsung dan domain eksternal lain tetap lewat proxy.
+- E2E happy path tetap lulus untuk daftar, detail, audio, dan tafsir.
+- Manual smoke test membuka minimal satu URL file R2 langsung dan mencoba `Dengarkan semua` untuk range pendek serta panjang.
+
+AI gate:
+
+- Jika test atau upload gagal, AI harus memperbaiki sampai lulus atau melaporkan blocker spesifik.
+- Jika semua lulus, AI memberi ringkasan, URL lokal/preview, dan instruksi test manual ke user.
+
 ## 5. Checklist Kontrol Kualitas Tiap Fase
 
 Sebelum memberi laporan ke user pada akhir fase, AI wajib memastikan:
@@ -768,5 +827,6 @@ User review paling penting ada pada:
 3. Akhir Phase 4: review front-end lengkap sebelum backend.
 4. Akhir Phase 7: review aplikasi setelah integrasi backend.
 5. Akhir Phase 8: review akhir sebelum deploy.
+6. Akhir Phase 9: review audio gabungan R2 setelah upload dan integrasi.
 
 AI tidak boleh melewati review Phase 4 untuk langsung membuat backend, karena requirement meminta front-end lengkap dengan dummy data diperiksa user terlebih dahulu.

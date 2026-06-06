@@ -11,17 +11,18 @@ Aturan update:
 
 ## Ringkasan Status
 
-| Fase | Nama Fase | Status | Tanggal Update | Catatan |
-| --- | --- | --- | --- | --- |
-| Phase 0 | Project Setup dan Quality Gate | `APPROVED` | 2026-06-04 | Scaffold Next.js, tooling, smoke page, dan quality gate lulus. Approved user. |
-| Phase 1 | Front-End Foundation dengan Dummy Data | `APPROVED` | 2026-06-04 | Fondasi front-end, dummy data 24 entri, helper, komponen, audio mock, dan test Phase 1 lulus. Approved user. |
-| Phase 2 | Halaman Daftar Ayat Lengkap dengan Dummy Data | `APPROVED` | 2026-06-04 | Halaman daftar lengkap, search, card actions, route detail dummy, dan test Phase 2 lulus. Approved user. |
-| Phase 3 | Halaman Detail dan Tafsir Lengkap dengan Dummy Data | `APPROVED` | 2026-06-04 | Halaman detail, list ayat, audio detail, halaman tafsir, navigasi, dan test Phase 3 lulus. Approved user. |
-| Phase 4 | Front-End Polish, Accessibility, dan User Review Gate | `APPROVED` | 2026-06-04 | Polish visual hierarchy, focus state, accessibility, keyboard navigation, responsive behavior, label audio berbeda, dan test Phase 4 lulus. Approved user. |
-| Phase 5 | Backend Foundation dan Database | `APPROVED` | 2026-06-04 | Backend foundation, Prisma schema, Docker Compose PostgreSQL config, API read-only, validasi, runtime API check, dan test Phase 5 lulus. Approved user. |
-| Phase 6 | Import Excel dan Seed Data Quran | `APPROVED` | 2026-06-04 | Import Excel, provider API publik EQuran/IDNBOGOR, seed idempotent, metadata sumber data, dan test Phase 6 lulus. Approved user. |
-| Phase 7 | Integrasi Front-End dengan Backend | `APPROVED` | 2026-06-05 | Front-end terhubung ke API backend via TanStack Query, detail/tafsir memakai data Quran publik sungguhan, audio Sudais benar-benar diputar via HTMLAudioElement, loading/error/fallback tersedia, dan test Phase 7 lulus. Approved user. |
-| Phase 8 | Production Hardening dan Deployment Preparation | `PASSED_WAITING_USER` | 2026-06-05 | Production hardening, env validation, README, db setup script, CI, API cache headers, metadata SEO, Vercel config, production preview smoke, dan quality gate lulus. Menunggu review akhir user. |
+| Fase    | Nama Fase                                             | Status     | Tanggal Update | Catatan                                                                                                                                                                                                                                  |
+| ------- | ----------------------------------------------------- | ---------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Phase 0 | Project Setup dan Quality Gate                        | `APPROVED` | 2026-06-04     | Scaffold Next.js, tooling, smoke page, dan quality gate lulus. Approved user.                                                                                                                                                            |
+| Phase 1 | Front-End Foundation dengan Dummy Data                | `APPROVED` | 2026-06-04     | Fondasi front-end, dummy data 24 entri, helper, komponen, audio mock, dan test Phase 1 lulus. Approved user.                                                                                                                             |
+| Phase 2 | Halaman Daftar Ayat Lengkap dengan Dummy Data         | `APPROVED` | 2026-06-04     | Halaman daftar lengkap, search, card actions, route detail dummy, dan test Phase 2 lulus. Approved user.                                                                                                                                 |
+| Phase 3 | Halaman Detail dan Tafsir Lengkap dengan Dummy Data   | `APPROVED` | 2026-06-04     | Halaman detail, list ayat, audio detail, halaman tafsir, navigasi, dan test Phase 3 lulus. Approved user.                                                                                                                                |
+| Phase 4 | Front-End Polish, Accessibility, dan User Review Gate | `APPROVED` | 2026-06-04     | Polish visual hierarchy, focus state, accessibility, keyboard navigation, responsive behavior, label audio berbeda, dan test Phase 4 lulus. Approved user.                                                                               |
+| Phase 5 | Backend Foundation dan Database                       | `APPROVED` | 2026-06-04     | Backend foundation, Prisma schema, Docker Compose PostgreSQL config, API read-only, validasi, runtime API check, dan test Phase 5 lulus. Approved user.                                                                                  |
+| Phase 6 | Import Excel dan Seed Data Quran                      | `APPROVED` | 2026-06-04     | Import Excel, provider API publik EQuran/IDNBOGOR, seed idempotent, metadata sumber data, dan test Phase 6 lulus. Approved user.                                                                                                         |
+| Phase 7 | Integrasi Front-End dengan Backend                    | `APPROVED` | 2026-06-05     | Front-end terhubung ke API backend via TanStack Query, detail/tafsir memakai data Quran publik sungguhan, audio Sudais benar-benar diputar via HTMLAudioElement, loading/error/fallback tersedia, dan test Phase 7 lulus. Approved user. |
+| Phase 8 | Production Hardening dan Deployment Preparation       | `APPROVED` | 2026-06-06     | Production hardening, env validation, README, db setup script, CI, API cache headers, metadata SEO, Vercel config, production preview smoke, dan quality gate lulus. User meminta lanjut Phase 9 setelah aplikasi go-live.               |
+| Phase 9 | Audio Gabungan R2                                     | `APPROVED` | 2026-06-06     | Audio gabungan 24 range berhasil dibuat, diupload ke R2, UI memakai `rangeAudioUrl`, quality gate lulus, dan hasil test user sudah OK.                                                                                                   |
 
 ## Detail Fase
 
@@ -40,13 +41,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Catatan:
 
@@ -70,13 +71,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -116,13 +117,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -165,13 +166,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -219,13 +220,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -274,13 +275,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -341,13 +342,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -407,13 +408,13 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
 | `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
 
 Test detail:
 
@@ -440,7 +441,7 @@ Catatan:
 
 ### Phase 8 - Production Hardening dan Deployment Preparation
 
-Status: `PASSED_WAITING_USER`
+Status: `APPROVED`
 
 Yang sudah dibuat:
 
@@ -460,15 +461,15 @@ Yang sudah dibuat:
 
 Test otomatis:
 
-| Command | Status |
-| --- | --- |
-| `corepack pnpm validate:env` | `PASS` |
+| Command                                                      | Status |
+| ------------------------------------------------------------ | ------ |
+| `corepack pnpm validate:env`                                 | `PASS` |
 | `corepack pnpm validate:env:db` dengan contoh `DATABASE_URL` | `PASS` |
-| `corepack pnpm lint` | `PASS` |
-| `corepack pnpm typecheck` | `PASS` |
-| `corepack pnpm test -- --run` | `PASS` |
-| `corepack pnpm test:e2e` | `PASS` |
-| `corepack pnpm build` | `PASS` |
+| `corepack pnpm lint`                                         | `PASS` |
+| `corepack pnpm typecheck`                                    | `PASS` |
+| `corepack pnpm test -- --run`                                | `PASS` |
+| `corepack pnpm test:e2e`                                     | `PASS` |
+| `corepack pnpm build`                                        | `PASS` |
 
 Test detail:
 
@@ -487,4 +488,71 @@ Catatan:
 - Production preview lokal masih berjalan di `http://127.0.0.1:3001`.
 - `corepack pnpm test:e2e` sempat gagal sekali karena `.next/trace` terkunci oleh preview server lama di port 3001; server dihentikan, `.next` dibersihkan dengan guard path, lalu e2e lulus.
 - `validate:env:db` sengaja membutuhkan `DATABASE_URL`; untuk validasi umum tanpa database gunakan `validate:env`.
-- Phase 8 menunggu review akhir user sebelum deploy atau perubahan tambahan.
+- User meminta lanjut Phase 9 setelah aplikasi go-live.
+
+### Phase 9 - Audio Gabungan R2
+
+Status: `APPROVED`
+
+Target implementasi:
+
+- Membuat file MP3 gabungan untuk 24 range ayat tematik agar fitur `Dengarkan semua` tidak lagi memutar MP3 per ayat secara berurutan.
+- Upload file gabungan ke Cloudflare R2 bucket `tahfidzh-mj-audio`.
+- Streaming file gabungan langsung dari `https://audio.mushollamj.com`, bukan lewat bandwidth Vercel.
+
+Konfigurasi:
+
+- Bucket R2: `tahfidzh-mj-audio`.
+- Public base URL: `https://audio.mushollamj.com`.
+- Credential upload dibaca dari `.env`.
+- `r2.dev` tidak dipakai untuk production.
+
+Acceptance criteria:
+
+- Semua 24 thematic verse memiliki `rangeAudioUrl`.
+- Semua `rangeAudioUrl` memakai domain `https://audio.mushollamj.com`.
+- Tombol `Dengarkan semua` di card dan header detail memakai satu file gabungan.
+- Tombol `Dengarkan ayat` tetap memakai audio per ayat.
+- URL R2 tidak diproxy melalui `/api/audio`.
+- File gabungan berhasil diupload ke R2 dan dapat dibuka langsung.
+
+Test otomatis:
+
+Yang sudah dibuat:
+
+- Script `corepack pnpm audio:build-upload` untuk download audio Sudais per ayat, merge range via `ffmpeg`, dan upload ke R2.
+- Helper URL audio gabungan dengan object key stabil seperti `ranges/baqarah-284-286.mp3`.
+- Metadata `rangeAudioUrl` untuk 24 thematic verses.
+- Tombol `Dengarkan semua` pada card dan detail header memakai satu file gabungan R2.
+- Tombol `Dengarkan ayat` tetap memakai audio per ayat.
+- Audio player memutar `audio.mushollamj.com` langsung tanpa proxy `/api/audio`.
+- `.audio/` masuk `.gitignore`, dan `.env.example` memuat contoh konfigurasi R2.
+- Semua 24 file range berhasil diupload ke R2 bucket `tahfidzh-mj-audio`.
+
+Test otomatis:
+
+| Command                       | Status |
+| ----------------------------- | ------ |
+| `corepack pnpm lint`          | `PASS` |
+| `corepack pnpm typecheck`     | `PASS` |
+| `corepack pnpm test -- --run` | `PASS` |
+| `corepack pnpm test:e2e`      | `PASS` |
+| `corepack pnpm build`         | `PASS` |
+
+Test detail:
+
+- Unit test helper object key dan URL R2 audio gabungan.
+- Unit test memastikan semua 24 fixture thematic verse punya `rangeAudioUrl` domain `audio.mushollamj.com`.
+- Component test memastikan `Dengarkan semua` memakai satu URL R2.
+- Unit test audio player memastikan URL R2 diputar langsung dan CDN eksternal lain tetap lewat proxy.
+- E2E regression lulus 19 test.
+- Build production Next.js berhasil.
+- Smoke check URL R2:
+  - `https://audio.mushollamj.com/ranges/baqarah-284-286.mp3`: HTTP 200, `audio/mpeg`, `Accept-Ranges: bytes`.
+  - `https://audio.mushollamj.com/ranges/ali-imran-1-27.mp3`: HTTP 200, `audio/mpeg`, `Accept-Ranges: bytes`.
+
+Catatan:
+
+- File audio lokal hasil generate berada di `.audio/` dan tidak masuk git.
+- `r2.dev` tidak dipakai untuk production.
+- User sudah test dan menyatakan hasil Phase 9 OK.

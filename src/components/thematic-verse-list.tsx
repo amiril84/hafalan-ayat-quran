@@ -15,19 +15,6 @@ import {
 import { searchThematicVerses } from "@/features/quran/search-thematic-verses";
 import type { ThematicVerse } from "@/features/quran/quran.types";
 
-function getSudaisAudioUrlsForVerse(verse: ThematicVerse) {
-  return Array.from(
-    { length: verse.endAyah - verse.startAyah + 1 },
-    (_, index) => {
-      const ayahNumber = verse.startAyah + index;
-
-      return `https://cdn.equran.id/audio-partial/Abdurrahman-as-Sudais/${String(
-        verse.surahId,
-      ).padStart(3, "0")}${String(ayahNumber).padStart(3, "0")}.mp3`;
-    },
-  );
-}
-
 export function ThematicVerseList({
   fallbackVerses = thematicVerseFixtures,
 }: {
@@ -111,7 +98,7 @@ export function ThematicVerseList({
               <VerseCard
                 key={verse.id}
                 verse={verse}
-                audioUrls={getSudaisAudioUrlsForVerse(verse)}
+                audioUrls={[verse.rangeAudioUrl]}
               />
             ))}
           </section>

@@ -92,10 +92,7 @@ export function AyahDetailView({ surahId, range }: AyahDetailViewProps) {
 
   return (
     <>
-      <DetailHeader
-        verse={verse}
-        audioUrls={ayahs.map((ayah) => ayah.audioUrl)}
-      />
+      <DetailHeader verse={verse} audioUrls={[verse.rangeAudioUrl]} />
       <main className="mx-auto w-full max-w-5xl px-5 py-8 sm:px-8">
         {isVerseLoading || isAyahLoading ? (
           <div className="mb-5">

@@ -10,6 +10,7 @@ export type ThematicVerse = {
   endAyah: number;
   theme: string;
   firstAyahSnippetArabic: string;
+  rangeAudioUrl: string;
 };
 
 export type AyahDetail = {

@@ -159,10 +159,22 @@ export async function upsertQuranSeedRecords({
   }
 
   for (const verse of records.thematicVerses) {
+    const thematicVerseData = {
+      id: verse.id,
+      order: verse.order,
+      surahId: verse.surahId,
+      surahName: verse.surahName,
+      surahNameNormalized: verse.surahNameNormalized,
+      startAyah: verse.startAyah,
+      endAyah: verse.endAyah,
+      theme: verse.theme,
+      firstAyahSnippetArabic: verse.firstAyahSnippetArabic,
+    };
+
     await db.thematicVerse.upsert({
       where: { id: verse.id },
-      update: verse,
-      create: verse,
+      update: thematicVerseData,
+      create: thematicVerseData,
     });
   }
 

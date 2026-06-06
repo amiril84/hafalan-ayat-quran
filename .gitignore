@@ -13,6 +13,7 @@ dist/
 *.log
 .next-dev.log
 .next-start.log
+.audio/
 
 # Environment
 .env

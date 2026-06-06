@@ -19,7 +19,8 @@
     "db:seed": "tsx scripts/import-quran-data.ts",
     "db:setup": "pnpm db:generate && pnpm db:migrate && pnpm db:seed",
     "db:studio": "prisma studio",
-    "data:import": "tsx scripts/import-quran-data.ts"
+    "data:import": "tsx scripts/import-quran-data.ts",
+    "audio:build-upload": "tsx scripts/build-upload-range-audio.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",

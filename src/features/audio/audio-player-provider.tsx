@@ -30,8 +30,9 @@ type AudioPlayerContextValue = {
 };
 
 const AudioPlayerContext = createContext<AudioPlayerContextValue | null>(null);
+const directAudioHosts = new Set(["audio.mushollamj.com"]);
 
-function toPlayableAudioUrl(audioUrl: string) {
+export function toPlayableAudioUrl(audioUrl: string) {
   if (audioUrl.startsWith("/")) {
     return audioUrl;
   }
@@ -41,6 +42,10 @@ function toPlayableAudioUrl(audioUrl: string) {
 
     if (url.origin === window.location.origin) {
       return `${url.pathname}${url.search}`;
+    }
+
+    if (directAudioHosts.has(url.hostname)) {
+      return url.toString();
     }
 
     return `/api/audio?src=${encodeURIComponent(url.toString())}`;

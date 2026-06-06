@@ -1,6 +1,7 @@
 import ExcelJS from "exceljs";
 import { parseAyahRange } from "../../lib/parse-ayah-range";
 import { sortThematicVerses } from "../../lib/sort-thematic-verses";
+import { getRangeAudioUrl } from "../../features/quran/audio-urls";
 import type { ThematicVerse } from "../../features/quran/quran.types";
 import { normalizeSurahName } from "./normalize-surah-name";
 
@@ -117,7 +118,7 @@ export async function importThematicVersesFromExcel(
     const surahId = mapExcelSurahNameToId(surahName);
     const { startAyah, endAyah } = parseAyahRange(rangeText);
 
-    rows.push({
+    const importedVerse = {
       id: `${surahId}-${startAyah}-${endAyah}`,
       order,
       surahId,
@@ -127,6 +128,11 @@ export async function importThematicVersesFromExcel(
       endAyah,
       theme: themeByOrder.get(order) ?? `Tema ayat ${order}`,
       firstAyahSnippetArabic: "",
+    };
+
+    rows.push({
+      ...importedVerse,
+      rangeAudioUrl: getRangeAudioUrl(importedVerse),
     });
   });
 

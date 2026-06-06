@@ -95,10 +95,38 @@ describe("AudioButton", () => {
       expect(playMock).toHaveBeenCalledTimes(1);
     });
     const audio = document.querySelector("audio");
-    const playableUrl = new URL(audio?.getAttribute("src") ?? "", location.href);
+    const playableUrl = new URL(
+      audio?.getAttribute("src") ?? "",
+      location.href,
+    );
 
     expect(`${playableUrl.pathname}${playableUrl.search}`).toBe(
       "/api/audio?src=https%3A%2F%2Fcdn.equran.id%2Faudio-partial%2FAbdurrahman-as-Sudais%2F002168.mp3",
+    );
+  });
+
+  it("plays R2 range audio directly without the same-origin audio proxy", async () => {
+    renderWithProviders(
+      <AudioButton
+        trackId="range-2-284-286"
+        label="Al Baqarah ayat 284 sampai 286"
+        audioUrls={["https://audio.mushollamj.com/ranges/baqarah-284-286.mp3"]}
+      />,
+    );
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Dengarkan Al Baqarah ayat 284 sampai 286",
+      }),
+    );
+
+    await waitFor(() => {
+      expect(playMock).toHaveBeenCalledTimes(1);
+    });
+    const audio = document.querySelector("audio");
+
+    expect(audio?.getAttribute("src")).toBe(
+      "https://audio.mushollamj.com/ranges/baqarah-284-286.mp3",
     );
   });
 });

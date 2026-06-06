@@ -11,6 +11,9 @@ describe("quran fixtures", () => {
       expect(verse.theme.length).toBeGreaterThan(0);
       expect(verse.firstAyahSnippetArabic.length).toBeGreaterThan(0);
       expect(verse.firstAyahSnippetArabic).toMatch(/[\u0600-\u06ff]/);
+      expect(verse.rangeAudioUrl).toMatch(
+        /^https:\/\/audio\.mushollamj\.com\/ranges\/.+\.mp3$/,
+      );
     }
 
     expect(ayahDetailFixtures.length).toBeGreaterThan(24);
@@ -20,7 +23,9 @@ describe("quran fixtures", () => {
       ),
     ).toBe(true);
     expect(
-      ayahDetailFixtures.every((ayah) => /[\u0600-\u06ff]/.test(ayah.arabicText)),
+      ayahDetailFixtures.every((ayah) =>
+        /[\u0600-\u06ff]/.test(ayah.arabicText),
+      ),
     ).toBe(true);
   });
 });
